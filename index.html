@@ -105,23 +105,15 @@ function createMainCheatMenu()
     Title.TextColor3 = Color3.fromRGB(255, 215, 0)
     Title.TextSize = 13
 
-    -- دوگمەیا تەلەگرامێ / کەناڵێ تە
-    local TgBtn = Instance.new("TextButton")
-    TgBtn.Parent = MainFrame
-    TgBtn.BackgroundColor3 = Color3.fromRGB(0, 136, 204)
-    TgBtn.Position = UDim2.new(0, 15, 0, 45)
-    TgBtn.Size = UDim2.new(0, 230, 0, 35)
-    TgBtn.Font = Enum.Font.SourceSansBold
-    TgBtn.Text = "تەلەگرام: @LEGEND_MODS33"
-    TgBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TgBtn.TextSize = 11
+<!-- Telegram Channel -->
+<a href="https://t.me/legend_mods33" class="btn" target="_blank">
+    <div class="btn-content">
+        <img src="telegram1.png" alt="Telegram Channel" class="icon-img">
+        <span>Join Telegram </span>
+    </div>
+    <span>→</span>
+</a>
 
-    TgBtn.MouseButton1Click:Connect(function()
-        setclipboard("https://t.me/LEGEND_MODS33")
-        TgBtn.Text = "لینک هاتە کپی کردن!"
-        task.wait(2)
-        TgBtn.Text = "تەلەگرام: @LEGEND_MODS33"
-    end)
 
     -- دوگمەیا Noclip
     local noclipActive = false
