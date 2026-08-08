@@ -1,0 +1,198 @@
+-- ==========================================================
+-- LEGEND SCRIPT - VIP MENU (WITH LOGO & FULL KURDISH)
+-- Developed for: Yuseef Surchi
+-- ==========================================================
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+
+-- 1. سیستەمێ پاسووردی (قەبولکرنا Small و Capital ب بێ کێماسی)
+local function createPasswordSystem()
+    local PassGui = Instance.new("ScreenGui")
+    PassGui.Name = "LegendPasswordGui"
+    PassGui.Parent = CoreGui
+
+    local MainPass = Instance.new("Frame")
+    MainPass.Parent = PassGui
+    MainPass.BackgroundColor3 = Color3.fromRGB(22, 22, 30)
+    MainPass.Position = UDim2.new(0.5, -140, 0.5, -90)
+    MainPass.Size = UDim2.new(0, 280, 0, 180)
+    MainPass.Active = true
+    MainPass.Draggable = true
+
+    local Title = Instance.new("TextLabel")
+    Title.Parent = MainPass
+    Title.BackgroundColor3 = Color3.fromRGB(30, 30, 42)
+    Title.Size = UDim2.new(1, 0, 0, 35)
+    Title.Font = Enum.Font.SourceSansBold
+    Title.Text = "LOGIN VIP"
+    Title.TextColor3 = Color3.fromRGB(255, 215, 0)
+    Title.TextSize = 14
+
+    local TextBox = Instance.new("TextBox")
+    TextBox.Parent = MainPass
+    TextBox.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+    TextBox.Position = UDim2.new(0, 20, 0, 50)
+    TextBox.Size = UDim2.new(0, 240, 0, 35)
+    TextBox.Font = Enum.Font.SourceSans
+    TextBox.PlaceholderText = "پاسووردی لێرە بنڤیسە..."
+    TextBox.Text = ""
+    TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextBox.TextSize = 13
+
+    local SubmitBtn = Instance.new("TextButton")
+    SubmitBtn.Parent = MainPass
+    SubmitBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 100)
+    SubmitBtn.Position = UDim2.new(0, 20, 0, 100)
+    SubmitBtn.Size = UDim2.new(0, 240, 0, 35)
+    SubmitBtn.Font = Enum.Font.SourceSansBold
+    SubmitBtn.Text = "چوونەژوور (Login)"
+    SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    SubmitBtn.TextSize = 13
+
+    SubmitBtn.MouseButton1Click:Connect(function()
+        local txt = string.lower(string.gsub(TextBox.Text, "%s+", ""))
+        
+        if txt == string.lower("@YUSEEF_SURCHI") or txt == string.lower("@Blnd_555") or txt == string.lower("@ArthUr3345") then
+            PassGui:Destroy()
+            createMainCheatMenu()
+        else
+            TextBox.Text = ""
+            TextBox.PlaceholderText = "پاسوورد خەلەتە!"
+        end
+    end)
+end
+
+-- 2. مێنۆیا سەرەکی (دگەل دوگمەیا وێنەیی / Logo Button)
+function createMainCheatMenu()
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "LegendMiniMenu"
+    ScreenGui.Parent = CoreGui
+
+    -- دوگمەیا وێنەیی (ImageButton) ب ناڤێ Button.png یا گیتەهەبا تە
+    local OpenCloseBtn = Instance.new("ImageButton")
+    OpenCloseBtn.Parent = ScreenGui
+    OpenCloseBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 42)
+    OpenCloseBtn.Position = UDim2.new(0, 20, 0.5, -25)
+    OpenCloseBtn.Size = UDim2.new(0, 45, 0, 45)
+    OpenCloseBtn.Active = true
+    OpenCloseBtn.Draggable = true
+    -- لێرەدا لینکا Raw یا وێنێ خۆ ل گیتهەبێ دانە (Button.png)
+    OpenCloseBtn.Image = "https://raw.githubusercontent.com/yosfinan-18/LEGENDSCRIPT/refs/heads/main/Button.png"
+
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Parent = ScreenGui
+    MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    MainFrame.Position = UDim2.new(0, 80, 0.5, -145)
+    MainFrame.Size = UDim2.new(0, 260, 0, 290)
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+
+    local TopBar = Instance.new("Frame")
+    TopBar.Parent = MainFrame
+    TopBar.BackgroundColor3 = Color3.fromRGB(35, 35, 48)
+    TopBar.Size = UDim2.new(1, 0, 0, 35)
+
+    local Title = Instance.new("TextLabel")
+    Title.Parent = TopBar
+    Title.BackgroundTransparency = 1
+    Title.Position = UDim2.new(0, 10, 0, 0)
+    Title.Size = UDim2.new(0, 200, 1, 0)
+    Title.Font = Enum.Font.SourceSansBold
+    Title.Text = "LEGEND SCRIPT"
+    Title.TextColor3 = Color3.fromRGB(255, 215, 0)
+    Title.TextSize = 13
+
+    -- دوگمەیا تەلەگرامێ / کەناڵێ تە
+    local TgBtn = Instance.new("TextButton")
+    TgBtn.Parent = MainFrame
+    TgBtn.BackgroundColor3 = Color3.fromRGB(0, 136, 204)
+    TgBtn.Position = UDim2.new(0, 15, 0, 45)
+    TgBtn.Size = UDim2.new(0, 230, 0, 35)
+    TgBtn.Font = Enum.Font.SourceSansBold
+    TgBtn.Text = "تەلەگرام: @LEGEND_MODS33"
+    TgBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TgBtn.TextSize = 11
+
+    TgBtn.MouseButton1Click:Connect(function()
+        setclipboard("https://t.me/LEGEND_MODS33")
+        TgBtn.Text = "لینک هاتە کپی کردن!"
+        task.wait(2)
+        TgBtn.Text = "تەلەگرام: @LEGEND_MODS33"
+    end)
+
+    -- دوگمەیا Noclip
+    local noclipActive = false
+    local NoclipBtn = Instance.new("TextButton")
+    NoclipBtn.Parent = MainFrame
+    NoclipBtn.BackgroundColor3 = Color3.fromRGB(180, 50, 50)
+    NoclipBtn.Position = UDim2.new(0, 15, 0, 90)
+    NoclipBtn.Size = UDim2.new(0, 230, 0, 35)
+    NoclipBtn.Font = Enum.Font.SourceSansBold
+    NoclipBtn.Text = "Noclip: [ OFF ]"
+    NoclipBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    NoclipBtn.TextSize = 12
+
+    NoclipBtn.MouseButton1Click:Connect(function()
+        noclipActive = not noclipActive
+        if noclipActive then
+            NoclipBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 80)
+            NoclipBtn.Text = "Noclip: [ ON ]"
+        else
+            NoclipBtn.BackgroundColor3 = Color3.fromRGB(180, 50, 50)
+            NoclipBtn.Text = "Noclip: [ OFF ]"
+        end
+    end)
+
+    RunService.Stepped:Connect(function()
+        if noclipActive and LocalPlayer.Character then
+            for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end
+    end)
+
+    -- لەزاتیا یاریزانێ (Speed)
+    local SpeedLbl = Instance.new("TextLabel")
+    SpeedLbl.Parent = MainFrame
+    SpeedLbl.BackgroundTransparency = 1
+    SpeedLbl.Position = UDim2.new(0, 15, 0, 135)
+    SpeedLbl.Size = UDim2.new(0, 230, 0, 20)
+    SpeedLbl.Font = Enum.Font.SourceSansBold
+    SpeedLbl.Text = "لەزاتیا یاریزانێ (Speed):"
+    SpeedLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
+    SpeedLbl.TextSize = 12
+
+    local SpeedBox = Instance.new("TextBox")
+    SpeedBox.Parent = MainFrame
+    SpeedBox.BackgroundColor3 = Color3.fromRGB(35, 35, 48)
+    SpeedBox.Position = UDim2.new(0, 15, 0, 160)
+    SpeedBox.Size = UDim2.new(0, 230, 0, 35)
+    SpeedBox.Font = Enum.Font.SourceSans
+    SpeedBox.PlaceholderText = "لەزاتی لێرە بنڤیسە..."
+    SpeedBox.Text = "150"
+    SpeedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    SpeedBox.TextSize = 12
+
+    RunService.RenderStepped:Connect(function()
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            local spd = tonumber(SpeedBox.Text)
+            if spd then
+                LocalPlayer.Character.Humanoid.WalkSpeed = spd
+            end
+        end
+    end)
+
+    -- کۆنترۆلا ڤەکرن و داخستنا مێنۆیێ ب دوگمەیا وێنەیی
+    local menuVisible = true
+    OpenCloseBtn.MouseButton1Click:Connect(function()
+        menuVisible = not menuVisible
+        MainFrame.Visible = menuVisible
+    end)
+end
+
+createPasswordSystem()
