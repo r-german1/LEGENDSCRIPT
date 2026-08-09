@@ -2,94 +2,238 @@
 <html lang="ku">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Websiteا من</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>كوردستان 3D - فۆڕما موبایلا آیفۆن</title>
     <style>
         body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-        }
-
-        .card {
-            background-color: #ffffff;
-            color: #000000;
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 350px;
-            width: 100%;
-        }
-
-        /* چارچووڤە و وێنە یان پیت */
-        .profile-container {
-            width: 120px;
-            height: 120px;
-            background-color: #f0f0f0;
-            border-radius: 50%;
-            margin: 0 auto 20px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             overflow: hidden;
-            border: 4px solid #ddd;
+            background-color: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #fff;
+            user-select: none;
         }
 
-        /* هەکە تو پیتەکێ بکاربینی */
-        .profile-letter {
-            font-size: 50px;
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+
+        /* UI Controls هۆکارێن کۆنتڕۆلێ ل سەر موبایلێ */
+        .ui-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .hud-panel {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 10px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            pointer-events: auto;
+        }
+
+        .hud-panel h2 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            color: #ffd700;
+        }
+
+        .hud-panel p {
+            margin: 0;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* بژاردەیێن کۆنتڕۆلێ ل خوارێ */
+        .controls-bar {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            pointer-events: auto;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 50px;
             font-weight: bold;
-            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        /* هەکە تو وێنەیێ خۆ بکاربینی (ل جهێ پیتێ دابخە) */
-        .profile-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .btn:active {
+            background: #ffd700;
+            color: #000;
         }
 
-        h1 {
-            margin: 10px 0;
-            font-size: 24px;
+        /* باڵاڤا گەڕانێ یا مەپێ و سینەمایێ */
+        .menu-drawer {
+            position: absolute;
+            right: 20px;
+            top: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: auto;
         }
 
-        /* بۆ ئیمۆجیان (هەتا 15 ئیمۆجی) */
-        .emojis {
-            font-size: 24px;
-            margin-top: 15px;
-            line-height: 1.6;
-            letter-spacing: 5px;
+        .menu-btn {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid #444;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            text-align: right;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <!-- بژاردەا 1: پیتەکا Custom -->
-        <div class="profile-container">
-            <span class="profile-letter">Y</span>
-        </div>
+    <!-- پشکا گرافیکا 3D -->
+    <div id="canvas-container"></div>
 
-        <!-- بژاردەا 2: وێنەیێ خۆ (هەکە تو بڤێی، ئەڤی ل خوارێ کارپێبکە و یا سەرێ لێ بکە دەر)
-        <div class="profile-container">
-            <img src="photo.jpg" alt="وێنەیێ من">
+    <!-- زانیاریێن سەرێ موبایلێ -->
+    <div class="ui-overlay">
+        <div class="hud-panel">
+            <h2>کوردستان 4K 🚗</h2>
+            <p id="location-status">جهـ: دهۆک (ناڤەندا باژێری)</p>
         </div>
-        -->
-
-        <h1>سلاڤ! خوشحال بم ب هاتنا تە</h1>
-        
-        <!-- ئیمۆجی (توشی دشێی هندەکێن دی زێدە بکەی، تا 15 ئیمۆجی یان پتر) -->
-        <div class="emojis">
-            😎🔥💻⚡🚀⚽ە🔥🎮✨👑
+        <div class="hud-panel" style="text-align: center;">
+            <h2>سینەما & فلیم</h2>
+            <p>پلەیەر ئامادەیە</p>
         </div>
     </div>
 
+    <!-- مۆنۆیا شارێن بادینان و سینەمایێ -->
+    <div class="menu-drawer">
+        <button class="menu-btn" onclick="changeLocation('دهۆک')">📍 دهۆک</button>
+        <button class="menu-btn" onclick="changeLocation('زاخۆ')">📍 زاخۆ</button>
+        <button class="menu-btn" onclick="changeLocation('ئامێدی')">📍 ئامێدی</button>
+        <button class="menu-btn" onclick="changeLocation('ئاکرێ')">📍 ئاکرێ</button>
+        <button class="menu-btn" onclick="changeLocation('سێمێل')">📍 سێمێل</button>
+        <button class="menu-btn" onclick="openCinema()">🎬 پلەیەرێ فلیمان</button>
+    </div>
+
+    <!-- دوگمەیێن کۆنتڕۆلکرنا ترومبێلێ و کامێرایێ (TPP / FPP) -->
+    <div class="controls-bar">
+        <button class="btn" onclick="toggleCameraView()">کامێرا: <span id="cam-mode">TPP</span></button>
+        <button class="btn" onclick="accelerateCar()">بژوور 🚀</button>
+        <button class="btn" onclick="stopCar()">رەوستا 🛑</button>
+    </div>
+
+    <!-- لێرە کتابخانا Three.js بۆ چێکرنا 3D ل سەر موبایلێ تێتە کارکرن -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // بنەمایێ 3D Scene
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050505);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        // روناهی
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(10, 20, 15);
+        scene.add(directionalLight);
+
+        // دروستکرنا ترومبێلەکا ساده‌ یا 3D ل ناڤ مەپێ
+        const carGroup = new THREE.Group();
+        
+        const bodyGeo = new THREE.BoxGeometry(2, 0.8, 4);
+        const bodyMat = new THREE.MeshStandardMaterial({ color: 0xff0000, roughness: 0.2 });
+        const carBody = new THREE.Mesh(bodyGeo, bodyMat);
+        carBody.position.y = 0.5;
+        carGroup.add(carBody);
+
+        scene.add(carGroup);
+
+        // دروستکرنا عەردێ مەپێ (دەڤەرێن کوردستانێ و ڕێکا)
+        const planeGeo = new THREE.PlaneGeometry(500, 500);
+        const planeMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.9 });
+        const ground = new THREE.Mesh(planeGeo, planeMat);
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
+
+        // سیستەمێ کامێرایێ (TPP و FPP)
+        let isFPP = false;
+        function updateCameraPosition() {
+            if (isFPP) {
+                camera.position.set(carGroup.position.x, carGroup.position.y + 0.8, carGroup.position.z + 0.5);
+            } else {
+                camera.position.set(carGroup.position.x, carGroup.position.y + 4, carGroup.position.z - 7);
+                camera.lookAt(carGroup.position);
+            }
+        }
+
+        function toggleCameraView() {
+            isFPP = !isFPP;
+            document.getElementById('cam-mode').innerText = isFPP ? 'FPP' : 'TPP';
+            updateCameraPosition();
+        }
+
+        // لڤینا ترومبێلێ
+        let isMoving = false;
+        function accelerateCar() {
+            isMoving = true;
+        }
+        function stopCar() {
+            isMoving = false;
+        }
+
+        // گوهۆڕینا شاران (مەپ)
+        function changeLocation(cityName) {
+            document.getElementById('location-status').innerText = "جهـ: " + cityName;
+            // لێرە تو دشێی کواڕدینات یان تێکستۆرێن مەپێ یێن گوگل مەپ یان فلتەرێن باژێری بگوهۆڕی
+        }
+
+        // پلەیەرێ فلیمان (سینەما ل ناڤ وبسایتی)
+        function openCinema() {
+            alert("پلەیەرێ فلیمان و سینەمایا کوردی هاتە ڤەکرن! (تو دشێی ڤیدیۆیان لێرە دابنێی)");
+        }
+
+        // لۆکاڤا لڤینا بەردەوام (Animation Loop)
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (isMoving) {
+                carGroup.position.z += 0.15;
+            }
+
+            updateCameraPosition();
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // گوهۆڕینا قەبارێ موبایلێ
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
