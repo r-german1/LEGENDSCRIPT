@@ -3,148 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>كوردستان 3D - فۆڕما موبایلا آیفۆن</title>
+    <title>GTA: کوردستان - 4 پاڵەوانێن چۆکور و اکشن 🚗🔥</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #000;
+            background-color: #030508;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             color: #fff;
             user-select: none;
         }
 
-        #canvas-container {
+        #game-container {
             width: 100vw;
             height: 100vh;
             display: block;
         }
 
-        /* UI Controls هۆکارێن کۆنتڕۆلێ ل سەر موبایلێ */
-        .ui-overlay {
+        .top-hud {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
+            top: 10px;
+            left: 10px;
+            right: 10px;
             display: flex;
             justify-content: space-between;
             pointer-events: none;
         }
 
-        .hud-panel {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 10px 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .hud-box {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
             pointer-events: auto;
         }
 
-        .hud-panel h2 {
-            margin: 0 0 5px 0;
-            font-size: 16px;
-            color: #ffd700;
-        }
+        .hud-box h3 { margin: 0 0 2px 0; font-size: 13px; color: #ffd700; }
+        .hud-box p { margin: 0; font-size: 11px; color: #ccc; }
 
-        .hud-panel p {
-            margin: 0;
-            font-size: 12px;
-            color: #aaa;
-        }
-
-        /* بژاردەیێن کۆنتڕۆلێ ل خوارێ */
-        .controls-bar {
+        .right-menu {
             position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            pointer-events: auto;
-        }
-
-        .btn {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 12px 18px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn:active {
-            background: #ffd700;
-            color: #000;
-        }
-
-        /* باڵاڤا گەڕانێ یا مەپێ و سینەمایێ */
-        .menu-drawer {
-            position: absolute;
-            right: 20px;
-            top: 100px;
+            right: 10px;
+            top: 75px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 6px;
             pointer-events: auto;
+            max-height: 75vh;
+            overflow-y: auto;
         }
 
         .menu-btn {
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid #444;
+            background: rgba(15, 15, 20, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 12px;
-            text-align: right;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 11px;
             cursor: pointer;
+            text-align: right;
+            transition: 0.2s;
         }
+
+        .menu-btn:active { background: #ffd700; color: #000; }
+
+        .controls-bar {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            pointer-events: auto;
+            width: 92%;
+            justify-content: center;
+        }
+
+        .ctrl-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: white;
+            padding: 10px 12px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+
+        .ctrl-btn:active { background: #ffd700; color: #000; }
     </style>
 </head>
 <body>
 
-    <!-- پشکا گرافیکا 3D -->
-    <div id="canvas-container"></div>
+    <div id="game-container"></div>
 
-    <!-- زانیاریێن سەرێ موبایلێ -->
-    <div class="ui-overlay">
-        <div class="hud-panel">
-            <h2>کوردستان 4K 🚗</h2>
-            <p id="location-status">جهـ: دهۆک (ناڤەندا باژێری)</p>
+    <div class="top-hud">
+        <div class="hud-box">
+            <h3>پاڵەوانێ نوو 🌟</h3>
+            <p id="active-char">پۆڵات ئەلەمدار</p>
         </div>
-        <div class="hud-panel" style="text-align: center;">
-            <h2>سینەما & فلیم</h2>
-            <p>پلەیەر ئامادەیە</p>
+        <div class="hud-box" style="text-align: center;">
+            <h3>مەپا عێراق & کوردستان 🗺️</h3>
+            <p id="active-city">دهۆک (Duhok)</p>
         </div>
     </div>
 
-    <!-- مۆنۆیا شارێن بادینان و سینەمایێ -->
-    <div class="menu-drawer">
-        <button class="menu-btn" onclick="changeLocation('دهۆک')">📍 دهۆک</button>
-        <button class="menu-btn" onclick="changeLocation('زاخۆ')">📍 زاخۆ</button>
-        <button class="menu-btn" onclick="changeLocation('ئامێدی')">📍 ئامێدی</button>
-        <button class="menu-btn" onclick="changeLocation('ئاکرێ')">📍 ئاکرێ</button>
-        <button class="menu-btn" onclick="changeLocation('سێمێل')">📍 سێمێل</button>
-        <button class="menu-btn" onclick="openCinema()">🎬 پلەیەرێ فلیمان</button>
+    <!-- 4 پاڵەوان (پۆڵات، یاماچ، چاغاتای، کەمال یامان) -->
+    <div class="right-menu">
+        <div style="font-size:10px; color:#ffd700; text-align:right; margin-bottom:2px;">--- 4 پاڵەوان ---</div>
+        <button class="menu-btn" onclick="selectCharacter('پۆڵات ئەلەمدار', 0xff0000)">1️⃣ پۆڵات ئەلەمدار</button>
+        <button class="menu-btn" onclick="selectCharacter('یاماچ کۆچوڤالی (چۆکور)', 0x0055ff)">2️⃣ یاماچ کۆچوڤالی</button>
+        <button class="menu-btn" onclick="selectCharacter('چاغاتای اولسۆی', 0x00ff88)">3️⃣ چاغاتای اولسۆی</button>
+        <button class="menu-btn" onclick="selectCharacter('کەمال یامان (چۆکور)', 0xffd700)">4️⃣ کەمال یامان</button>
+
+        <div style="font-size:10px; color:#ffd700; text-align:right; margin:6px 0 2px 0;">--- شارێن کوردستانێ ---</div>
+        <button class="menu-btn" onclick="teleportCity('دهۆک')">📍 دهۆک</button>
+        <button class="menu-btn" onclick="teleportCity('زاخۆ')">📍 زاخۆ</button>
+        <button class="menu-btn" onclick="teleportCity('هەولێر')">📍 هەولێر</button>
+        <button class="menu-btn" onclick="teleportCity('سلێمانی')">📍 سلێمانی</button>
+        <button class="menu-btn" onclick="teleportCity('ئامێدی')">📍 ئامێدی</button>
+        <button class="menu-btn" onclick="teleportCity('ئاکرێ')">📍 ئاکرێ</button>
+        <button class="menu-btn" onclick="teleportCity('کەرکووک')">📍 کەرکووک</button>
     </div>
 
-    <!-- دوگمەیێن کۆنتڕۆلکرنا ترومبێلێ و کامێرایێ (TPP / FPP) -->
     <div class="controls-bar">
-        <button class="btn" onclick="toggleCameraView()">کامێرا: <span id="cam-mode">TPP</span></button>
-        <button class="btn" onclick="accelerateCar()">بژوور 🚀</button>
-        <button class="btn" onclick="stopCar()">رەوستا 🛑</button>
+        <button class="ctrl-btn" onclick="toggleVehicle()">حالت: <span id="mode-text">پیادە 🚶‍♂️</span></button>
+        <button class="ctrl-btn" onclick="moveAction()">جووڵە 🏃‍♂️</button>
+        <button class="ctrl-btn" onclick="switchCamera()">کامێرا: <span id="cam-text">TPP</span></button>
     </div>
 
-    <!-- لێرە کتابخانا Three.js بۆ چێکرنا 3D ل سەر موبایلێ تێتە کارکرن -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // بنەمایێ 3D Scene
-        const container = document.getElementById('canvas-container');
+        const container = document.getElementById('game-container');
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x050505);
+        scene.background = new THREE.Color(0x030508);
 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -152,83 +148,86 @@
         renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
-        // روناهی
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
         scene.add(ambientLight);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(10, 20, 15);
-        scene.add(directionalLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        dirLight.position.set(15, 35, 20);
+        scene.add(dirLight);
 
-        // دروستکرنا ترومبێلەکا ساده‌ یا 3D ل ناڤ مەپێ
-        const carGroup = new THREE.Group();
-        
-        const bodyGeo = new THREE.BoxGeometry(2, 0.8, 4);
-        const bodyMat = new THREE.MeshStandardMaterial({ color: 0xff0000, roughness: 0.2 });
-        const carBody = new THREE.Mesh(bodyGeo, bodyMat);
-        carBody.position.y = 0.5;
-        carGroup.add(carBody);
+        const playerGroup = new THREE.Group();
+        const bodyGeo = new THREE.BoxGeometry(0.9, 1.9, 0.9);
+        const bodyMat = new THREE.MeshStandardMaterial({ color: 0xff0000, roughness: 0.3 });
+        const playerBody = new THREE.Mesh(bodyGeo, bodyMat);
+        playerBody.position.y = 0.95;
+        playerGroup.add(playerBody);
+        scene.add(playerGroup);
 
-        scene.add(carGroup);
-
-        // دروستکرنا عەردێ مەپێ (دەڤەرێن کوردستانێ و ڕێکا)
-        const planeGeo = new THREE.PlaneGeometry(500, 500);
-        const planeMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.9 });
-        const ground = new THREE.Mesh(planeGeo, planeMat);
+        const groundGeo = new THREE.PlaneGeometry(1200, 1200);
+        const groundMat = new THREE.MeshStandardMaterial({ color: 0x14171f, roughness: 0.9 });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
         ground.rotation.x = -Math.PI / 2;
         scene.add(ground);
 
-        // سیستەمێ کامێرایێ (TPP و FPP)
+        function selectCharacter(name, colorHex) {
+            document.getElementById('active-char').innerText = name;
+            bodyMat.color.setHex(colorHex);
+            alert("تۆ ئەکتەرێ " + name + " هەلبژارت!");
+        }
+
+        function teleportCity(cityName) {
+            document.getElementById('active-city').innerText = cityName;
+            playerGroup.position.set(0, 0, 0);
+            alert("تۆ هاتە ڤەگوهاستن بۆ باژێرێ " + cityName + " یێ کوردستانێ!");
+        }
+
         let isFPP = false;
-        function updateCameraPosition() {
+        let isVehicle = false;
+
+        function updateCamPos() {
             if (isFPP) {
-                camera.position.set(carGroup.position.x, carGroup.position.y + 0.8, carGroup.position.z + 0.5);
+                camera.position.set(playerGroup.position.x, playerGroup.position.y + 0.7, playerGroup.position.z);
             } else {
-                camera.position.set(carGroup.position.x, carGroup.position.y + 4, carGroup.position.z - 7);
-                camera.lookAt(carGroup.position);
+                camera.position.set(playerGroup.position.x, playerGroup.position.y + 3.2, playerGroup.position.z - 5.5);
+                camera.lookAt(playerGroup.position);
             }
         }
 
-        function toggleCameraView() {
+        function toggleVehicle() {
+            isVehicle = !isVehicle;
+            if (isVehicle) {
+                document.getElementById('mode-text').innerText = "ترومبێلا اکشن 🚗";
+                bodyMat.color.setHex(0x00ffff);
+            } else {
+                document.getElementById('mode-text').innerText = "پیادە 🚶‍♂️";
+                bodyMat.color.setHex(0xff0000);
+            }
+        }
+
+        let isRunning = false;
+        function moveAction() {
+            isRunning = true;
+        }
+
+        function switchCamera() {
             isFPP = !isFPP;
-            document.getElementById('cam-mode').innerText = isFPP ? 'FPP' : 'TPP';
-            updateCameraPosition();
+            document.getElementById('cam-text').innerText = isFPP ? 'FPP' : 'TPP';
+            updateCamPos();
         }
 
-        // لڤینا ترومبێلێ
-        let isMoving = false;
-        function accelerateCar() {
-            isMoving = true;
-        }
-        function stopCar() {
-            isMoving = false;
-        }
-
-        // گوهۆڕینا شاران (مەپ)
-        function changeLocation(cityName) {
-            document.getElementById('location-status').innerText = "جهـ: " + cityName;
-            // لێرە تو دشێی کواڕدینات یان تێکستۆرێن مەپێ یێن گوگل مەپ یان فلتەرێن باژێری بگوهۆڕی
-        }
-
-        // پلەیەرێ فلیمان (سینەما ل ناڤ وبسایتی)
-        function openCinema() {
-            alert("پلەیەرێ فلیمان و سینەمایا کوردی هاتە ڤەکرن! (تو دشێی ڤیدیۆیان لێرە دابنێی)");
-        }
-
-        // لۆکاڤا لڤینا بەردەوام (Animation Loop)
         function animate() {
             requestAnimationFrame(animate);
 
-            if (isMoving) {
-                carGroup.position.z += 0.15;
+            if (isRunning) {
+                playerGroup.position.z += 0.25;
+                if (playerGroup.position.z > 60) playerGroup.position.z = -60;
             }
 
-            updateCameraPosition();
+            updateCamPos();
             renderer.render(scene, camera);
         }
 
         animate();
 
-        // گوهۆڕینا قەبارێ موبایلێ
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
